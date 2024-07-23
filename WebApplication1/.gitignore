@@ -11,7 +11,7 @@
 *.sln.docstates
 
 # Visual Studio Code
-# /.vscode/
+/.vscode/
 
 # Rider
 /.idea/
