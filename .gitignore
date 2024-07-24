@@ -68,7 +68,7 @@
 **/Data/**
 
 # Ignore any files or directories named 'wwwroot' that might contain static assets
-**/wwwroot/**
+# **/wwwroot/**
 
 # Ignore API documentation files
 **/[Ss]wagger/[Jj]son/**

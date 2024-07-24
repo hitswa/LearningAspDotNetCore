@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    The sitemap is generated for test purpose only
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://www.contentkingapp.com/</loc>
+		<lastmod>2017-06-14T19:55:25+02:00</lastmod>
+        <priority></priority>
+        <friquency></friquency>
+	</url>
+	<url>
+		<loc>https://www.contentkingapp.com/blog/</loc>
+		<lastmod>2016-06-24T10:23:20+02:00</lastmod>
+        <priority></priority>
+        <friquency></friquency>
+	</url>
+</urlset>
