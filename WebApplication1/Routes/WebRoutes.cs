@@ -4,8 +4,12 @@
     {
         public static void MapRoutes(IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapGet("/products", () => "Web response from product path");
+            endpoints.Map("/products", async(context) => {
+                await context.Response.WriteAsync("WEB response from product path");
+            });
             // Add other web routes here
+
+            // endpoints.MapControllers();
         }
     }
 }
