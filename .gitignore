@@ -1,8 +1,8 @@
 # Visual Studio
-/obj/
-/bin/
-[Bb]in/
-[Dd]ebug/
+**/obj/
+**/bin/
+**/[Bb]in/
+**/[Dd]ebug/
 [Rr]elease/
 [Ss]taging/
 *.suo
