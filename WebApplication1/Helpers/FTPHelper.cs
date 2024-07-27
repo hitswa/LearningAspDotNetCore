@@ -13,11 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 namespace WebApplication1.Helpers {
     public class FtpHelper {
 
-        [Key]
         private string FtpHost { get; set; }
-        [Key]
         private string FtpUsername { get; set; }
-        [Key]
         private string FtpPassword  { get; set; }
 
         public FtpHelper(string ftpHost, string ftpUsername, string ftpPassword)
