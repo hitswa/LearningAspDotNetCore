@@ -18,6 +18,7 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FluentFTP" Version="50.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
