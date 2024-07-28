@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using FluentFTP;
 using Microsoft.Extensions.Configuration;
 
+// Install-Package FluentFTP
+// Install-Package Microsoft.Extensions.Configuration
+
 public class FtpHelper
 {
     private readonly IConfiguration _configuration;
@@ -18,7 +21,7 @@ public class FtpHelper
         return _configuration[$"FtpSettings:{key}"];
     }
 
-    public async Task UploadFileAsync(string sourceFile, string destinationFile, FtpRemoteExists remoteExists = FtpRemoteExists.Overwrite, bool createDirectory = false, FtpVerify verify = FtpVerify.None, CancellationToken cancellationToken = default)
+    public async Task UploadFileAsync(string localFile, string remoteFile, FtpRemoteExists remoteExists = FtpRemoteExists.Overwrite, bool createDirectory = false, FtpVerify verify = FtpVerify.None, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -27,7 +30,7 @@ public class FtpHelper
                 await ftpClient.Connect(cancellationToken);
                 ftpClient.Config.RetryAttempts = 3; // Consider making this configurable
 
-                await ftpClient.UploadFile(sourceFile, destinationFile, remoteExists, createDirectory, verify, cancellationToken);
+                await ftpClient.UploadFile(localFile, remoteFile, remoteExists, createDirectory, verify, cancellationToken);
             }
         }
         catch (FtpException ex)
@@ -37,7 +40,7 @@ public class FtpHelper
         }
     }
 
-    public async Task DownloadFileAsync(string sourceFile, string destinationFile, FtpLocalExists localExists = FtpLocalExists.Overwrite, FtpVerify verify = FtpVerify.None, CancellationToken cancellationToken = default)
+    public async Task DownloadFileAsync(string localFile, string remoteFile, FtpLocalExists localExists = FtpLocalExists.Overwrite, FtpVerify verify = FtpVerify.None, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -46,7 +49,7 @@ public class FtpHelper
                 await ftpClient.Connect(cancellationToken);
                 ftpClient.Config.RetryAttempts = 3; // Consider making this configurable
 
-                await ftpClient.DownloadFile(sourceFile, destinationFile, localExists, verify, cancellationToken);
+                await ftpClient.DownloadFile(localFile, remoteFile, localExists, verify, cancellationToken);
             }
         }
         catch (FtpException ex)
