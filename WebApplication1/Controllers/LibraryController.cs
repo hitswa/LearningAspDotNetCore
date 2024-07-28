@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Modals;
 using WebApplication1.Modals.Reposotries;
-using WebApplication1.Services;
+using WebApplication1;
 using WebApplication1.Helpers;
 
 namespace WebApplication1.Controllers
@@ -36,8 +36,8 @@ namespace WebApplication1.Controllers
             var books = await _bookRepository.GetAllBooks();
 
             // create xml file from data
-            XmlService xmlService = new XmlService();
-            var xml = await xmlService.CreateXmlFromBooks(books);
+            XmlHelper xmlHelper = new XmlHelper();
+            var xml = await xmlHelper.CreateXmlFromBooksAsync(books);
 
             // save xml file to folder
             FileHelper fileHelper = new FileHelper();
