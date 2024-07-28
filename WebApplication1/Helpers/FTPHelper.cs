@@ -1,157 +1,58 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentFTP;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Extensions.Configuration;
 
-// better code 
-// https://juldhais.net/how-to-download-files-from-secure-ftp-server-sftp-using-winscp-in-net-895fbb44362c
-// https://www.codeproject.com/Tips/5273618/ASP-NET-CORE-Using-SFTP-FTP-in-ASP-NET-CORE-Projec
+public class FtpHelper
+{
+    private readonly IConfiguration _configuration;
 
-namespace WebApplication1.Helpers {
-    public class FtpHelper {
+    public FtpHelper(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
 
-        private string FtpHost { get; set; }
-        private string FtpUsername { get; set; }
-        private string FtpPassword  { get; set; }
+    private string GetFtpSetting(string key)
+    {
+        return _configuration[$"FtpSettings:{key}"];
+    }
 
-        public FtpHelper(string ftpHost, string ftpUsername, string ftpPassword)
+    public async Task UploadFileAsync(string sourceFile, string destinationFile, FtpRemoteExists remoteExists = FtpRemoteExists.Overwrite, bool createDirectory = false, FtpVerify verify = FtpVerify.None, CancellationToken cancellationToken = default)
+    {
+        try
         {
-            FtpHost = ftpHost;
-            FtpUsername = ftpUsername;
-            FtpPassword = ftpPassword;
+            using (var ftpClient = new AsyncFtpClient(GetFtpSetting("Host"), GetFtpSetting("Username"), GetFtpSetting("Password")))
+            {
+                await ftpClient.Connect(cancellationToken);
+                ftpClient.Config.RetryAttempts = 3; // Consider making this configurable
+
+                await ftpClient.UploadFile(sourceFile, destinationFile, remoteExists, createDirectory, verify, cancellationToken);
+            }
         }
+        catch (FtpException ex)
+        {
+            // Log specific FTP errors
+            throw new Exception($"FTP upload failed: {ex.Message}");
+        }
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sourceFile"></param>
-        /// <param name="destinationFile"></param>
-        public void UploadFile(string sourceFile, string destinationFile) {
-            try
+    public async Task DownloadFileAsync(string sourceFile, string destinationFile, FtpLocalExists localExists = FtpLocalExists.Overwrite, FtpVerify verify = FtpVerify.None, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            using (var ftpClient = new AsyncFtpClient(GetFtpSetting("Host"), GetFtpSetting("Username"), GetFtpSetting("Password")))
             {
-                using (var ftpClient = new FtpClient(FtpHost, FtpUsername, FtpPassword)) {
-                    ftpClient.Connect();
+                await ftpClient.Connect(cancellationToken);
+                ftpClient.Config.RetryAttempts = 3; // Consider making this configurable
 
-                    // upload a file to an existing FTP directory
-                    ftpClient.UploadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md");
-
-                    // upload a file and ensure the FTP directory is created on the server
-                    ftpClient.UploadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", FtpRemoteExists.Overwrite, true);
-
-                    // setting upload try for 3 times when fails
-                    ftpClient.Config.RetryAttempts = 3;
-
-                    // upload a file and ensure the FTP directory is created on the server, verify the file after upload
-                    ftpClient.UploadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", FtpRemoteExists.Overwrite, false, FtpVerify.Retry);
-                }
+                await ftpClient.DownloadFile(sourceFile, destinationFile, localExists, verify, cancellationToken);
             }
-            catch (System.Exception ex)
-            {
-                // Handle exceptions
-                Console.WriteLine($"Error uploading file: {ex.Message}");
-                throw;
-            }
-            finally {
-                // do nothing
-            }
-		}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-		public async Task UploadFileAsync() {
-            try
-            {
-                var token = new CancellationToken();
-                using (var ftpClient = new AsyncFtpClient(FtpHost, FtpUsername, FtpPassword)) {
-                    await ftpClient.Connect(token);
-
-                    // upload a file to an existing FTP directory
-                    await ftpClient.UploadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", token: token);
-
-                    // upload a file and ensure the FTP directory is created on the server
-                    await ftpClient.UploadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", FtpRemoteExists.Overwrite, true, token: token);
-
-                    // setting upload try for 3 times when fails
-                    ftpClient.Config.RetryAttempts = 3;
-
-                    // upload a file and ensure the FTP directory is created on the server, verify the file after upload
-                    await ftpClient.UploadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", FtpRemoteExists.Overwrite, true, FtpVerify.Retry, token: token);
-
-                }
-            }
-            catch (System.Exception ex)
-            {
-                // Handle exceptions
-                Console.WriteLine($"Error uploading file: {ex.Message}");   
-                throw;
-            }
-            finally {
-                // do noting
-            }
-		}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void DownloadFile() {
-            try
-            {
-                using (var ftpClient = new FtpClient(FtpHost, FtpUsername, FtpPassword)) {
-                    ftpClient.Connect();
-
-                    // download a file and ensure the local directory is created
-                    ftpClient.DownloadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md");
-
-                    // download a file and ensure the local directory is created, verify the file after download
-                    ftpClient.DownloadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", FtpLocalExists.Overwrite, FtpVerify.Retry);
-
-                }
-            }
-            catch (System.Exception ex)
-            {
-                // Handle exceptions
-                Console.WriteLine($"Error uploading file: {ex.Message}"); 
-                throw;
-            }
-            finally {
-                // do nothing
-            }
-		}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-		public async Task DownloadFileAsync() {
-            try
-            {
-                var token = new CancellationToken();
-                using (var ftpClient = new AsyncFtpClient(FtpHost, FtpUsername, FtpPassword)) {
-                    await ftpClient.Connect(token);
-
-                    // download a file and ensure the local directory is created
-                    await ftpClient.DownloadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", token: token);
-
-                    // download a file and ensure the local directory is created, verify the file after download
-                    await ftpClient.DownloadFile(@"D:\Github\FluentFTP\README.md", "/public_html/temp/README.md", FtpLocalExists.Overwrite, FtpVerify.Retry, token: token);
-
-                }    
-            }
-            catch (System.Exception ex)
-            {
-                // Handle exceptions
-                Console.WriteLine($"Error uploading file: {ex.Message}"); 
-                throw;
-            }
-			finally {
-                // do nothing
-            }
-		}
-
+        }
+        catch (FtpException ex)
+        {
+            // Log specific FTP errors
+            throw new Exception($"FTP download failed: {ex.Message}");
+        }
     }
 }
