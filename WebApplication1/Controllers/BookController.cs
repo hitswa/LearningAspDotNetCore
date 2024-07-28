@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Modals;
+using WebApplication1.Modals.Reposotries;
 
 namespace WebApplication1.Controllers
 {
@@ -16,18 +17,19 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [Route("books")]
-        public IActionResult GetAllBooks()
+        public async Task<IActionResult> GetAllBooks()
         {
-            return Json(_bookRepository.GetAllBooks());
+            var books = await _bookRepository.GetAllBooks();
+            return Ok(books);
         }
 
         [HttpGet]
         [Route("book/{bookId:int}")]
-        public IActionResult GetBookById([FromRoute] int bookId)
+        public async Task<IActionResult> GetBookById([FromRoute] int bookId)
         {
             if (bookId < 1) return BadRequest();
 
-            var book = _bookRepository.GetBookById(bookId);
+            var book = await _bookRepository.GetBookById(bookId);
 
             if (book == null) return NotFound();
 
@@ -36,21 +38,21 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("book")]
-        public IActionResult AddBook([FromBody] Book book)
+        public async Task<IActionResult> AddBook([FromBody] Book book)
         {
             return Ok(_bookRepository.AddBook(book));
         }
 
         [HttpPut]
         [Route("book/{bookId:int}")]
-        public IActionResult UpdateBookById([FromRoute] int bookId, [FromBody] Book book)
+        public async Task<IActionResult> UpdateBookById([FromRoute] int bookId, [FromBody] Book book)
         {
             return Ok(_bookRepository.UpdateBook(book));
         }
 
         [HttpDelete]
         [Route("book/{bookId:int}")]
-        public IActionResult DeleteBookById([FromRoute] int bookId)
+        public async Task<IActionResult> DeleteBookById([FromRoute] int bookId)
         {
             return Ok(_bookRepository.RemoveBookById(bookId));
         }

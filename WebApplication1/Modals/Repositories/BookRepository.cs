@@ -3,7 +3,7 @@ using WebApplication1.Modals;
 using WebApplication1;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1;
+namespace WebApplication1.Modals.Reposotries;
 
 public class BookRepository
 {
@@ -26,8 +26,16 @@ public class BookRepository
         return await _dbContext.Books.ToListAsync();
     }
 
-    public async Task AddBook(Book book) {
-        await _dbContext.Books.AddAsync(new Book { Id = book.Id, Name = book.Name, Author = book.Author });
+    //public async Task AddBook(Book book) {
+    //    await _dbContext.Books.AddAsync(
+    //            new Book { Id = book.Id, Name = book.Name, Author = book.Author }
+    //          );
+    //}
+
+    public async Task AddBook(Book book)
+    {
+        await _dbContext.Books.AddAsync(book);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateBook(Book book)

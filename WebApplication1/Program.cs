@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApplication1;
+using WebApplication1.Modals;
+using WebApplication1.Modals.Reposotries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 
 // Register services
 builder.Services.AddScoped<BookRepository>();
+builder.Services.AddScoped<libraryBook>();
 
 var app = builder.Build();
 
