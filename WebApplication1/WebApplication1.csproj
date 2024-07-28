@@ -12,9 +12,6 @@
     <Folder Include="wwwroot/assets/" />
     <Folder Include="wwwroot/assets/css/" />
   </ItemGroup>
-
-  <ItemGroup>
-  </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
@@ -29,6 +26,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="WinSCP" Version="6.3.4" />
   </ItemGroup>
 
 </Project>

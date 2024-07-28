@@ -888,6 +888,18 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "WinSCP/6.3.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/WinSCPnet.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/WinSCPnet.dll": {}
+        },
+        "build": {
+          "buildTransitive/WinSCP.targets": {}
+        }
       }
     }
   },
@@ -2331,6 +2343,25 @@
         "system.threading.channels.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "WinSCP/6.3.4": {
+      "sha512": "QruTYLecwjwjzz+txdszwfWTT42Yue7XC091DVgN1GkFyNEqtqUBlygX2FYctw0q3ICvFhXFCIBIpXLO1mMLEg==",
+      "type": "package",
+      "path": "winscp/6.3.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/WinSCP.targets",
+        "buildTransitive/WinSCP.targets",
+        "docs/README.md",
+        "lib/net40/WinSCPnet.dll",
+        "lib/netstandard2.0/WinSCPnet.dll",
+        "tools/WinSCP.exe",
+        "winscp.6.3.4.nupkg.sha512",
+        "winscp.nuspec",
+        "winscp64.png"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -2339,28 +2370,32 @@
       "Microsoft.EntityFrameworkCore >= 8.0.7",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.7",
-      "Npgsql.EntityFrameworkCore.PostgreSQL >= 8.0.4"
+      "Npgsql.EntityFrameworkCore.PostgreSQL >= 8.0.4",
+      "WinSCP >= 6.3.4"
     ]
   },
   "packageFolders": {
-    "/Users/hitesh/.nuget/packages/": {}
+    "C:\\Users\\Hitesh Kumar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/WebApplication1.csproj",
+      "projectUniqueName": "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/WebApplication1.csproj",
-      "packagesPath": "/Users/hitesh/.nuget/packages/",
-      "outputPath": "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/obj/",
+      "projectPath": "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\WebApplication1.csproj",
+      "packagesPath": "C:\\Users\\Hitesh Kumar\\.nuget\\packages\\",
+      "outputPath": "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/hitesh/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Hitesh Kumar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2407,6 +2442,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[8.0.4, )"
+          },
+          "WinSCP": {
+            "target": "Package",
+            "version": "[6.3.4, )"
           }
         },
         "imports": [
@@ -2428,16 +2467,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
-    }
-  ]
+  }
 }

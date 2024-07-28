@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/WebApplication1.csproj": {}
+    "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\WebApplication1.csproj": {}
   },
   "projects": {
-    "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/WebApplication1.csproj": {
+    "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/WebApplication1.csproj",
+        "projectUniqueName": "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/WebApplication1.csproj",
-        "packagesPath": "/Users/hitesh/.nuget/packages/",
-        "outputPath": "/Users/hitesh/Workspace/learning/AspDotNet/MyFirstAspProject/WebApplication1/obj/",
+        "projectPath": "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\WebApplication1.csproj",
+        "packagesPath": "C:\\Users\\Hitesh Kumar\\.nuget\\packages\\",
+        "outputPath": "D:\\HItesh\\WCD\\LearningAspDotNetCore\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/hitesh/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Hitesh Kumar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -66,6 +69,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.4, )"
+            },
+            "WinSCP": {
+              "target": "Package",
+              "version": "[6.3.4, )"
             }
           },
           "imports": [
@@ -87,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

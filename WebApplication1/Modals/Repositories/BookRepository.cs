@@ -1,48 +1,50 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using WebApplication1.Modals;
+using WebApplication1;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1;
 
-public static class BookRepository
+public class BookRepository
 {
-    private static List<Book> books = new List<Book>([
-        new Book{ Id = 1, Name = "", Author = "" },
-        new Book{ Id = 2, Name = "", Author = "" },
-        new Book{ Id = 3, Name = "", Author = "" },
-    ]);
+    private readonly ApplicationDbContext _dbContext;
 
-    public static Boolean BookExists(int id) {
-        return books.Exists(x => x.Id == id);
+    public BookRepository(ApplicationDbContext dbContext)
+    {
+        _dbContext = dbContext;
     }
 
-    public static Book? GetBookById(int id) {
-        return books.Find(x => x.Id == id);
+    public async Task<Boolean> BookExists(int id) {
+        return await _dbContext.Books.AnyAsync(x => x.Id == id);
     }
 
-    public static List<Book> GetAllBooks() {
-        return books.ToList();
+    public async Task<Book?> GetBookById(int id) {
+        return await _dbContext.Books.FindAsync(id);
     }
 
-    public static List<Book> AddBook(Book book) {
-        books.Add(new Book{ Id = book.Id, Name= book.Name, Author = book.Author });
-        return books.ToList();
+    public async Task<List<Book>> GetAllBooks() {
+        return await _dbContext.Books.ToListAsync();
     }
 
-    public static List<Book> UpdateBook(Book book) {
-        var obj = books.Find(x => x.Id == book.id);
-        
-        if(obj != null) {
-            obj.Author = book.Author;
-            obj.Name = book.Name;
-        }
-
-        return books.ToList();
+    public async Task AddBook(Book book) {
+        await _dbContext.Books.AddAsync(new Book { Id = book.Id, Name = book.Name, Author = book.Author });
     }
 
-    public static List<Book> RemoveBookById(int id) {
-        books.Remove(new Book() { Id  = id });
-        return books.ToList();
+    public async Task UpdateBook(Book book)
+    {
+        await _dbContext.Books
+                            .Where(b => b.Id == book.Id)
+                            .ExecuteUpdateAsync(b =>
+                                b
+                                    .SetProperty(p => p.Author, book.Author)
+                                    .SetProperty(p => p.Name, book.Name)
+                            );
     }
 
-    
+    public async Task RemoveBookById(int id)
+    {
+        await _dbContext.Books.Where(b => b.Id == id).ExecuteDeleteAsync();
+    }
+
+
 }

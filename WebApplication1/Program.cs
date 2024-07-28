@@ -12,6 +12,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Register services
+builder.Services.AddScoped<BookRepository>();
+
 var app = builder.Build();
 
 // enabling static file content routes
